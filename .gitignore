@@ -47,3 +47,7 @@ Library
 /maingame/*.csproj
 /maingame/*.sln
 /maingame/*.suo
+/maingame/*.suo
+/maingame/*.csproj
+/maingame/*.sln
+/maingame/obj
