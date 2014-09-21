@@ -49,6 +49,7 @@
      <Compile Include="Assets\code\com_main.cs" />
      <Compile Include="Assets\code\logicmodel\Game.cs" />
      <Compile Include="Assets\code\logicmodel\Screen.cs" />
+     <Compile Include="Assets\code\logicmodel\models\ScriptModel.cs" />
      <Compile Include="Assets\codelib\C#LE\CLS_Environment.cs" />
      <Compile Include="Assets\codelib\C#LE\Compitler\CLS_Compiler.cs" />
      <Compile Include="Assets\codelib\C#LE\Compitler\CLS_Compiler_00Util.cs" />
@@ -133,6 +134,8 @@
      <Compile Include="Assets\codelib\C#LE\_Interface\CLS_Function.cs" />
      <Compile Include="Assets\codelib\C#LE\_Interface\CLS_Loger.cs" />
      <Compile Include="Assets\codelib\C#LE\_Interface\CLS_Type.cs" />
+     <Compile Include="Assets\streamingassets\script\IScreenController.cs" />
+     <Compile Include="Assets\streamingassets\script\init.cs" />
      <None Include="Assets\codelib\C#LE\Log.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor46/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
