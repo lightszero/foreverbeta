@@ -43,3 +43,7 @@ Temporary Items
 .apdisk
 Temp
 Library
+/maingame/obj
+/maingame/*.csproj
+/maingame/*.sln
+/maingame/*.suo
