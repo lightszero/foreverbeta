@@ -7,6 +7,10 @@ using UnityEngine;
 
 class ScriptModel : IScriptModel, CSLE.ICLS_Logger
 {
+    public ScriptModel(IGameForModel game)
+    {
+
+    }
     public void Update(float delta)
     {
 
@@ -36,7 +40,11 @@ class ScriptModel : IScriptModel, CSLE.ICLS_Logger
         env.RegType(new CSLE.RegHelper_Type(typeof(UnityEngine.Object), "Object"));
         env.RegType(new CSLE.RegHelper_Type(typeof(UnityEngine.Transform), "Transform"));
         env.RegType(new CSLE.RegHelper_Type(typeof(UnityEngine.UI.Text), "Text"));
- 
+        env.RegType(new CSLE.RegHelper_Type(typeof(UnityEngine.RectTransform), "RectTransform"));
+        env.RegType(new CSLE.RegHelper_Type(typeof(UnityEngine.Vector2), "Vector2"));
+        env.RegType(new CSLE.RegHelper_Type(typeof(UnityEngine.Vector3), "Vector3"));
+        env.RegType(new CSLE.RegHelper_Type(typeof(UnityEngine.Vector4), "Vector4"));
+
         
 
         //直接编译模式

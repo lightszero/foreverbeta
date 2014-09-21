@@ -125,7 +125,7 @@ class Game : IGameForModel, IGameForControl
         this.rootScene = rootScene;
 
         modelmgr = new GameModelMgr();
-        modelmgr.Init();
+        modelmgr.Init(this);
 
         //初始必备的模块先初始化
         InitModel("script");

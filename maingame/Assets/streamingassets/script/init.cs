@@ -34,7 +34,14 @@ public class screen_init : IScreenController
         text.text = "Init Test.\n初始化测试";
 
         IUIToolModel tool = game.InitModel("UITool") as IUIToolModel;//初始化UI工具模块
-       
+
+        var img = tool.createRawImage();
+        RectTransform t = img.transform as RectTransform;
+        t.localScale = Vector3.one;
+        t.localPosition = Vector3.zero;
+        t.anchorMin = Vector2.zero;
+        t.anchorMax = Vector2.zero;
+
         //game.GetModel("UITool") as IToolModel;
 
         //game.rootUI.transform as RectTransform;
