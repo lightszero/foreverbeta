@@ -9,11 +9,14 @@ interface IScreenController
     {
         get;
     }
-    void OnNavInitBegin();
-    void OnNavExitBegin();
-    void OnNavUpdate();
 
     void OnInited();
     void OnUpdate();
     void OnExited();
+}
+interface IScreenControllerAsync : IScreenController
+{
+    void OnNavInitBegin();
+    void OnNavExitBegin();
+    void OnNavUpdate();
 }

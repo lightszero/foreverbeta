@@ -47,9 +47,12 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\code\com_main.cs" />
-     <Compile Include="Assets\code\logicmodel\Game.cs" />
-     <Compile Include="Assets\code\logicmodel\Screen.cs" />
-     <Compile Include="Assets\code\logicmodel\models\ScriptModel.cs" />
+     <Compile Include="Assets\code\logicmodel\IGameModels.cs" />
+     <Compile Include="Assets\code\logicmodel\base\Game.cs" />
+     <Compile Include="Assets\code\logicmodel\base\Screen.cs" />
+     <Compile Include="Assets\code\logicmodel\gamemodels\GameModelMgr.cs" />
+     <Compile Include="Assets\code\logicmodel\gamemodels\ScriptModel.cs" />
+     <Compile Include="Assets\code\logicmodel\gamemodels\UIToolModel.cs" />
      <Compile Include="Assets\codelib\C#LE\CLS_Environment.cs" />
      <Compile Include="Assets\codelib\C#LE\Compitler\CLS_Compiler.cs" />
      <Compile Include="Assets\codelib\C#LE\Compitler\CLS_Compiler_00Util.cs" />

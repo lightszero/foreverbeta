@@ -121,6 +121,9 @@ class Game : IGameForModel, IGameForControl
     Dictionary<string, IGameModel> models = new Dictionary<string, IGameModel>();
     public void Init(GameObject rootUI, GameObject rootScene, string firstscene)
     {
+        this.rootUI = rootUI;
+        this.rootScene = rootScene;
+
         modelmgr = new GameModelMgr();
         modelmgr.Init();
 
@@ -263,19 +266,3 @@ class Game : IGameForModel, IGameForControl
     List<ScreenProxy> screens = new List<ScreenProxy>();
 }
 
-class GameModelMgr
-{
-    public void Init()
-    {
-
-    }
-    public IGameModel Create(string type)
-    {
-        switch (type)
-        {
-            case "script":
-                return new ScriptModel();
-        }
-        return null;
-    }
-}

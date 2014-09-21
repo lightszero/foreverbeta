@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 
 class ScreenProxy
 {
 
-    public ScreenProxy(string scenenname,IGameForModel game)
+    public ScreenProxy(string scenenname, IGameForModel game)
     {
         this.name = scenenname;
         this.game = game;
@@ -19,13 +20,13 @@ class ScreenProxy
         private set;
     }
     bool bInUpdate = false;
-        bool bExUpdate = false;
+    bool bExUpdate = false;
 
     public void BeginInit()
     {
         if (screen == null)
         {
-            screen = new Screen(name,game);
+            screen = new Screen(name, game);
             screen.BeginInit();
             bInUpdate = true;
         }
@@ -34,7 +35,7 @@ class ScreenProxy
     {
         get
         {
-            if(screen!=null)
+            if (screen != null)
                 return screen.inited;
             else
                 return false;
@@ -42,14 +43,14 @@ class ScreenProxy
     }
     public void Update()
     {
-        if(screen!=null&&(bInUpdate||bExUpdate))
+        if (screen != null && (bInUpdate || bExUpdate))
         {
             screen.UpdateNav();
-            if(bInUpdate&&inited)
+            if (bInUpdate && inited)
             {
                 bInUpdate = false;
             }
-            if(bExUpdate&&exited)
+            if (bExUpdate && exited)
             {
                 bExUpdate = false;
             }
@@ -66,7 +67,7 @@ class ScreenProxy
         if (screen != null)
         {
             screen.BeginExit();
-            bExUpdate=true;
+            bExUpdate = true;
         }
     }
     public bool exited
@@ -89,9 +90,9 @@ public interface IScreenForModel
 }
 class Screen : IScreenForModel
 {
-    public Screen(string scenenname,IGameForModel game)
+    public Screen(string scenenname, IGameForModel game)
     {
-        controller = new ScreenController(scenenname,game,this);
+        controller = new ScreenController(scenenname, game, this);
         this.name = scenenname;
     }
     ScreenController controller;
@@ -104,7 +105,7 @@ class Screen : IScreenForModel
     public void Update(float deltatimer)
     {
         timer += deltatimer;
-        if(inited&&!exited&&updaterate>0&&timer>1.0f/(float)updaterate)
+        if (inited && !exited && updaterate > 0 && timer > 1.0f / (float)updaterate)
         {
             timer -= 1.0f / (float)updaterate;
             controller.OnUpdate();
@@ -142,22 +143,37 @@ class Screen : IScreenForModel
     {
         CSLE.CLS_Environment env;
         CSLE.CLS_Content content;
-        public ScreenController(string name,IGameForModel game,IScreenForModel screen)
+        public ScreenController(string name, IGameForModel game, IScreenForModel screen)
         {
-           IScriptModel script= game.GetModel("script") as IScriptModel;
-           env = script.getScriptEnv();
-           var type =  env.GetTypeByKeywordQuiet(name) as CSLE.ICLS_Type;
-           content = new CSLE.CLS_Content(env);
-           scriptThis = type.function.New(content, null).value as CSLE.SInstance;
-           scriptThis.member["game"] = new CSLE.CLS_Content.Value();
-           scriptThis.member["game"].value = game;
-           scriptThis.member["game"].type = typeof(IGameForModel);
-           scriptThis.member["screen"] = new CSLE.CLS_Content.Value();
-           scriptThis.member["screen"].value = screen;
-           scriptThis.member["screen"].type = typeof(IScreenForModel);
+            this.game = game;
+            this.screen = screen;
 
 
+            IScriptModel script = game.GetModel("script") as IScriptModel;
+            env = script.getScriptEnv();
+            var type = env.GetTypeByKeywordQuiet(name) as CSLE.CLS_Type_Class;
+            content = new CSLE.CLS_Content(env);
+            scriptThis = type.function.New(content, null).value as CSLE.SInstance;
+            scriptThis.member["game"] = new CSLE.CLS_Content.Value();
+            scriptThis.member["game"].value = game;
+            scriptThis.member["game"].type = typeof(IGameForModel);
+            scriptThis.member["screen"] = new CSLE.CLS_Content.Value();
+            scriptThis.member["screen"].value = screen;
+            scriptThis.member["screen"].type = typeof(IScreenForModel);
+
+
+            var typeasync = env.GetTypeByKeywordQuiet("IScreenControllerAsync") as CSLE.CLS_Type_Class;
+            try
+            {
+                havetypeasync = (type.ConvertTo(content, scriptThis, typeasync.type) != null);
+            }
+            catch
+            {
+                havetypeasync = false;
+            }
+            Debug.Log(havetypeasync);
         }
+        bool havetypeasync = false;
         CSLE.SInstance scriptThis;
 
 
@@ -174,33 +190,51 @@ class Screen : IScreenForModel
             private set;
         }
 
-        public void OnUpdate()
-        {
-            scriptThis.type.MemberCall(content, scriptThis, "OnUpdate", null);
-        }
+
 
 
 
         public void OnNavInitBegin()
         {
-            scriptThis.type.MemberCall(content, scriptThis, "OnNavInitBegin", null);
+            if (havetypeasync)
+            {
+                scriptThis.type.MemberCall(content, scriptThis, "OnNavInitBegin", null);
+            }
+            else
+            {
+                screen.Inited();
+            }
         }
 
         public void OnNavExitBegin()
         {
-            scriptThis.type.MemberCall(content, scriptThis, "OnNavExitBegin", null);
+            if (havetypeasync)
+            {
+                scriptThis.type.MemberCall(content, scriptThis, "OnNavExitBegin", null);
+            }
+            else
+            {
+                screen.Exited();
+            }
         }
 
         public void OnNavUpdate()
         {
-            scriptThis.type.MemberCall(content, scriptThis, "OnNavUpdate", null);
+            if (havetypeasync)
+            {
+                scriptThis.type.MemberCall(content, scriptThis, "OnNavUpdate", null);
+            }
+
         }
 
         public void OnInited()
         {
             scriptThis.type.MemberCall(content, scriptThis, "OnInited", null);
         }
-
+        public void OnUpdate()
+        {
+            scriptThis.type.MemberCall(content, scriptThis, "OnUpdate", null);
+        }
         public void OnExited()
         {
             scriptThis.type.MemberCall(content, scriptThis, "OnExited", null);
@@ -213,11 +247,13 @@ class Screen : IScreenForModel
     public void Inited()
     {
         this.inited = true;
+        controller.OnInited();
     }
 
     public void Exited()
     {
         this.exited = true;
+        controller.OnExited();
     }
 }
 

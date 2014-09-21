@@ -1,24 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.UI;
 
 public class screen_init : IScreenController
 {
-    public void OnNavInitBegin()
-    {
-        Debug.Log("screen=" + screen);
-        //screen.Inited();
-    }
-
-    public void OnNavExitBegin()
-    {
-        //screen.Exited();
-    }
-
-    public void OnNavUpdate()
-    {
-        
-    }
 
 
 
@@ -39,14 +25,26 @@ public class screen_init : IScreenController
 
     public void OnInited()
     {
-        throw new NotImplementedException();
+        Debug.Log("OnInited");
+        screen.SetUpdateRate(1);
+        Debug.Log("game:" + game);
+        Debug.Log("game.rootUI:" + game.rootUI);
+        GameObject label = game.rootUI.transform.Find("ScreenLabel").gameObject;
+        Text text = label.GetComponent<Text>();
+        text.text = "Init Test.\n初始化测试";
+
+        IUIToolModel tool = game.InitModel("UITool") as IUIToolModel;//初始化UI工具模块
+       
+        //game.GetModel("UITool") as IToolModel;
+
+        //game.rootUI.transform as RectTransform;
     }
     public void OnUpdate()
     {
-        throw new NotImplementedException();
+        Debug.Log("OnUpdate");
     }
     public void OnExited()
     {
-        throw new NotImplementedException();
+        Debug.Log("OnExited");
     }
 }
