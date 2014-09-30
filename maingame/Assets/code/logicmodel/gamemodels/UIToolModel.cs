@@ -19,8 +19,16 @@ class UIToolModel : IUIToolModel
         GameObject obj = new GameObject("image");
         obj.AddComponent<RectTransform>();
         obj.AddComponent<CanvasRenderer>();
-        obj.AddComponent<Image>();
+        var img =obj.AddComponent<Image>();
         obj.transform.parent = this.game.rootUI.transform;
+        obj.transform.localScale = Vector3.one;
+
+                var tex= Resources.Load("back2") as Texture2D;
+
+        img.sprite =Sprite.Create(tex,new Rect(0,0,tex.width,tex.height),Vector2.zero
+            ,100,1,SpriteMeshType.FullRect,new Vector4(3,3,3,3));
+        img.type = Image.Type.Sliced;
+
         return obj;
     }
     public GameObject createRawImage()
@@ -31,6 +39,8 @@ class UIToolModel : IUIToolModel
         obj.AddComponent<CanvasRenderer>();
         obj.AddComponent<RawImage>();
         obj.transform.parent = this.game.rootUI.transform;
+
+        
         return obj;
     }
 

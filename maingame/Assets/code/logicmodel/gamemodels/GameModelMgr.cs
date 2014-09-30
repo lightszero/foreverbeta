@@ -13,6 +13,9 @@
                 return new ScriptModel(game);
             case "uitool":
                 return new UIToolModel(game);
+
+            case "blockscene":
+                return new BlockSceneModel(game);
         }
         return null;
     }

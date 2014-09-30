@@ -33,6 +33,7 @@ class ScriptModel : IScriptModel, CSLE.ICLS_Logger
         env.RegType(new CSLE.RegHelper_Type(typeof(IGameModel), "IGameForModel"));
         env.RegType(new CSLE.RegHelper_Type(typeof(IScriptModel), "IScriptModel"));
         env.RegType(new CSLE.RegHelper_Type(typeof(IUIToolModel), "IUIToolModel"));
+        env.RegType(new CSLE.RegHelper_Type(typeof(IBlockSceneModel), "IBlockSceneModel"));
 
         //UnityEngine
         env.RegType(new CSLE.RegHelper_Type(typeof(UnityEngine.Debug), "Debug"));

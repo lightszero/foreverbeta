@@ -35,13 +35,15 @@ public class screen_init : IScreenController
 
         IUIToolModel tool = game.InitModel("UITool") as IUIToolModel;//初始化UI工具模块
 
-        var img = tool.createRawImage();
-        RectTransform t = img.transform as RectTransform;
-        t.localScale = Vector3.one;
-        t.localPosition = Vector3.zero;
-        t.anchorMin = Vector2.zero;
-        t.anchorMax = Vector2.zero;
+        var img = tool.createImage();
+        //RectTransform t = img.transform as RectTransform;
+        //t.localScale = Vector3.one;
+        //t.localPosition = Vector3.zero;
+        //t.anchorMin = Vector2.zero;
+        //t.anchorMax = Vector2.zero;
 
+        IBlockSceneModel scene =game.InitModel("blockscene") as IBlockSceneModel;
+        var bs = scene.createMap(256, 64);
         //game.GetModel("UITool") as IToolModel;
 
         //game.rootUI.transform as RectTransform;

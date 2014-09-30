@@ -13,3 +13,7 @@ public interface IUIToolModel:IGameModel
     GameObject createImage();
     GameObject createRawImage();
 }
+public interface IBlockSceneModel:IGameModel
+{
+    GameObject createMap(int x, int y);
+}
