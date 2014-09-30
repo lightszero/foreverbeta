@@ -42,8 +42,10 @@ using UnityEngine;
 
         public GameObject createMap(int x, int y)
         {
-            GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Quad);
+            GameObject obj = new GameObject("blockscene");//;; GameObject.CreatePrimitive(PrimitiveType.Quad);
             obj.transform.parent = game.rootScene.transform;
+            var bs= obj.AddComponent<com_blockscene>();
+            bs.Init(x,y);
             return obj;
         }
     }

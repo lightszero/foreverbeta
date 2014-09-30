@@ -43,7 +43,7 @@ public class screen_init : IScreenController
         //t.anchorMax = Vector2.zero;
 
         IBlockSceneModel scene =game.InitModel("blockscene") as IBlockSceneModel;
-        var bs = scene.createMap(256, 64);
+        var bs = scene.createMap(1024, 128);
         //game.GetModel("UITool") as IToolModel;
 
         //game.rootUI.transform as RectTransform;
